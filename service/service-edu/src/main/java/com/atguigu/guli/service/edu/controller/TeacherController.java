@@ -7,12 +7,14 @@ import com.atguigu.guli.service.edu.entity.vo.TeacherQueryVo;
 import com.atguigu.guli.service.edu.service.TeacherService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -22,6 +24,8 @@ import java.util.List;
  * @author leishuai
  * @since 2019-11-20
  */
+@Api(description = "讲师管理")
+@CrossOrigin
 @RestController
 @RequestMapping("/admin/edu/teacher")
 public class TeacherController {
@@ -92,6 +96,24 @@ public class TeacherController {
             @RequestBody Teacher teacher) {
         teacherService.updateById(teacher);
         return R.ok();
+    }
+
+    @ApiOperation(value="根据id列表删除讲师")
+    @DeleteMapping("batch-remove")
+    public R removeRows(
+            @ApiParam(value = "讲师id列表", name = "idList", required = true)
+            @RequestBody List<String> idList){
+        boolean result = teacherService.removeByIds(idList);
+        return R.ok().message("删除讲师成功");
+    }
+
+    @ApiOperation(value = "根据左关键字查询讲师名列表")
+    @GetMapping("list/name/{key}")
+    public R selectNameListByKey(
+            @ApiParam(name = "key",value = "关键字",required = true)
+            @PathVariable String key){
+        List<Map<String, Object>> nameList = this.teacherService.selectNameListByKey(key);
+        return R.ok().data("nameList",nameList);
     }
 
 
