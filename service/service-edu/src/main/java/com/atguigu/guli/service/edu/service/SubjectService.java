@@ -1,7 +1,11 @@
 package com.atguigu.guli.service.edu.service;
 
 import com.atguigu.guli.service.edu.entity.Subject;
+import com.atguigu.guli.service.edu.entity.vo.SubjectVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,22 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SubjectService extends IService<Subject> {
 
+    /**
+     * 批量导入
+     * @param inputStream
+     * @throws Exception
+     */
+    void batchImport(InputStream inputStream) throws Exception;
+
+    /**
+     * 嵌套数据列表
+     * @return
+     */
+    List<SubjectVo> nestedList();
+
+    /**
+     * 多条语句查询
+     * @return
+     */
+    List<SubjectVo> nestedList2();
 }

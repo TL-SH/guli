@@ -2,6 +2,7 @@ package com.atguigu.guli.service.edu.mapper;
 
 import com.atguigu.guli.service.edu.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author leishuai
  * @since 2019-11-20
  */
+@Repository
 public interface CommentMapper extends BaseMapper<Comment> {
 
 }

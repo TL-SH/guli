@@ -1,8 +1,9 @@
-package com.atguigu.guli.service.oss.service;
+package com.atguigu.guli.service.oss.service.impl;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.CannedAccessControlList;
+import com.atguigu.guli.service.oss.service.FileService;
 import com.atguigu.guli.service.oss.util.OssProperties;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
