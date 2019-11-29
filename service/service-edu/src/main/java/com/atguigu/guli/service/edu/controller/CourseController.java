@@ -4,6 +4,7 @@ package com.atguigu.guli.service.edu.controller;
 import com.atguigu.guli.common.base.result.R;
 import com.atguigu.guli.service.edu.entity.Course;
 import com.atguigu.guli.service.edu.entity.form.CourseInfoForm;
+import com.atguigu.guli.service.edu.entity.vo.CoursePublishVo;
 import com.atguigu.guli.service.edu.entity.vo.CourseQueryVo;
 import com.atguigu.guli.service.edu.service.CourseService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -91,5 +92,24 @@ public class CourseController {
         return R.ok().message("删除成功");
     }
 
+    @ApiOperation(value = "根据课程id查询发布课程信息")
+    @GetMapping("course-publish-info/{id}")
+    public R getCoursePublicVoById(
+            @ApiParam(name = "id",value = "课程信息id",required = true)
+            @PathVariable String id){
+
+        CoursePublishVo coursePublishVoById = this.courseService.getCoursePublishVoById(id);
+        return R.ok().data("item",coursePublishVoById);
+    }
+
+
+    @ApiOperation(value = "根据id发布课程")
+    @PutMapping("publish-course/{id}")
+    public R publishCourseById(
+            @ApiParam(name = "id", value = "课程ID", required = true)
+            @PathVariable String id){
+        courseService.publishCourseById(id);
+        return R.ok();
+    }
 }
 

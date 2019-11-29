@@ -2,6 +2,7 @@ package com.atguigu.guli.service.edu.service;
 
 import com.atguigu.guli.service.edu.entity.Course;
 import com.atguigu.guli.service.edu.entity.form.CourseInfoForm;
+import com.atguigu.guli.service.edu.entity.vo.CoursePublishVo;
 import com.atguigu.guli.service.edu.entity.vo.CourseQueryVo;
 import com.atguigu.guli.service.edu.entity.vo.SubjectVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -51,4 +52,21 @@ public interface CourseService extends IService<Course> {
      * @param id
      */
     void removeCourseById(String id);
+
+
+    /**
+     * 根据课程id查询帆布课程信息
+     * @param id
+     * @return
+     */
+    CoursePublishVo getCoursePublishVoById(String id);
+
+
+    /**
+     * 发布课程信息
+     * @param id
+     */
+    void publishCourseById(String id);
+
+
 }
