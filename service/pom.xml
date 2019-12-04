@@ -14,6 +14,8 @@
         <module>service-edu</module>
         <module>service-oss</module>
         <module>service-vod</module>
+        <module>service-ucenter</module>
+        <module>service-statistics</module>
     </modules>
     <artifactId>service</artifactId>
     <dependencies>
