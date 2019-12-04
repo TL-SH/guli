@@ -80,4 +80,40 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
 
         return chapterVoList;
     }
+
+    @Override
+    public List<ChapterVo> nestedListForWeb(String courseId) {
+        List<ChapterVo> chapterVoList = new ArrayList<>();
+        // 获取章节的信息
+        QueryWrapper<Chapter> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("course_id",courseId);
+        queryWrapper.orderByAsc("sort","id");
+        List<Chapter> chapterList = baseMapper.selectList(queryWrapper);
+
+        // 获取课时的信息
+        QueryWrapper<Video> videoQueryWrapper = new QueryWrapper<>();
+        videoQueryWrapper.eq("course_id",courseId);
+        videoQueryWrapper.orderByAsc("sort","id");
+        List<Video> videoList = videoMapper.selectList(videoQueryWrapper);
+
+        // 填充列表数据:Chapter列表
+        for (Chapter chapter : chapterList) {
+            // 创建chapter对象
+            ChapterVo chapterVo = new ChapterVo();
+            BeanUtils.copyProperties(chapter,chapterVo);
+            chapterVoList.add(chapterVo);
+
+            // Video列表
+            List<VideoVo> videoVoList = new ArrayList<>();
+            for (Video video : videoList) {
+                if(chapter.getId().equals(video.getChapterId())){
+                    VideoVo videoVo = new VideoVo();
+                    BeanUtils.copyProperties(video,videoVo);
+                    videoVoList.add(videoVo);
+                }
+            }
+            chapterVo.setChildren(videoVoList);
+        }
+        return chapterVoList;
+    }
 }

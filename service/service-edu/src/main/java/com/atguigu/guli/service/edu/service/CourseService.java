@@ -2,13 +2,12 @@ package com.atguigu.guli.service.edu.service;
 
 import com.atguigu.guli.service.edu.entity.Course;
 import com.atguigu.guli.service.edu.entity.form.CourseInfoForm;
-import com.atguigu.guli.service.edu.entity.vo.CoursePublishVo;
-import com.atguigu.guli.service.edu.entity.vo.CourseQueryVo;
-import com.atguigu.guli.service.edu.entity.vo.SubjectVo;
+import com.atguigu.guli.service.edu.entity.vo.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -67,6 +66,21 @@ public interface CourseService extends IService<Course> {
      * @param id
      */
     void publishCourseById(String id);
+
+    /**
+     * 分页查询课程类表
+     * @param pageParam
+     * @param webCourseQueryVo
+     * @return
+     */
+    Map<String, Object> webSelectPage(Page<Course> pageParam, WebCourseQueryVo webCourseQueryVo);
+
+    /**
+     * 获取课程信息并更新浏览量
+     * @param id
+     * @return
+     */
+    WebCourseVo selectWebCourseVoById(String id);
 
 
 }

@@ -3,9 +3,12 @@ package com.atguigu.guli.service.edu.service.impl;
 import com.atguigu.guli.service.edu.entity.Chapter;
 import com.atguigu.guli.service.edu.entity.Course;
 import com.atguigu.guli.service.edu.entity.CourseDescription;
+import com.atguigu.guli.service.edu.entity.Teacher;
 import com.atguigu.guli.service.edu.entity.form.CourseInfoForm;
 import com.atguigu.guli.service.edu.entity.vo.CoursePublishVo;
 import com.atguigu.guli.service.edu.entity.vo.CourseQueryVo;
+import com.atguigu.guli.service.edu.entity.vo.WebCourseQueryVo;
+import com.atguigu.guli.service.edu.entity.vo.WebCourseVo;
 import com.atguigu.guli.service.edu.mapper.ChapterMapper;
 import com.atguigu.guli.service.edu.mapper.CommentMapper;
 import com.atguigu.guli.service.edu.mapper.CourseDescriptionMapper;
@@ -19,6 +22,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 课程 服务实现类
@@ -159,4 +167,70 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         course.setStatus(Course.COURSE_NORMAL);
         baseMapper.updateById(course);
     }
+
+    @Override
+    public Map<String, Object> webSelectPage(Page<Course> pageParam, WebCourseQueryVo webCourseQueryVo) {
+        // 创建QueryWrapper对象
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+
+        // 组装查询条件
+        if(!StringUtils.isEmpty(webCourseQueryVo.getSubjectParentId())){
+            queryWrapper.eq("subject_parent_id",webCourseQueryVo.getSubjectParentId());
+        }
+
+        if(!StringUtils.isEmpty(webCourseQueryVo.getSubjectId())){
+            queryWrapper.eq("subject_id",webCourseQueryVo.getSubjectId());
+        }
+
+        if(!StringUtils.isEmpty(webCourseQueryVo.getBuyCountSort())){
+            queryWrapper.orderByDesc("buy_count");
+        }else if(!StringUtils.isEmpty(webCourseQueryVo.getGmtCreateSort())){
+            queryWrapper.orderByDesc("gmt_create");
+        }else if(!StringUtils.isEmpty(webCourseQueryVo.getPriceSort())){
+            queryWrapper.orderByDesc("price");
+        }else {
+            queryWrapper.orderByDesc("id");
+        }
+
+        // 执行查询
+        baseMapper.selectPage(pageParam,queryWrapper);
+        // 组装结果
+        List<Course> records = pageParam.getRecords();
+        long total = pageParam.getTotal();
+        long current = pageParam.getCurrent();
+        long size = pageParam.getSize();
+        long pages = pageParam.getPages();
+        boolean hasNext = pageParam.hasNext();
+        boolean hasPrevious = pageParam.hasPrevious();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+        return map;
+    }
+
+    @Override
+    public WebCourseVo selectWebCourseVoById(String id) {
+        // 获取课程浏览信息
+        Course course = baseMapper.selectById(id);
+        course.setViewCount(course.getViewCount()+1);
+        // 跟新课程浏览信息
+        baseMapper.updateById(course);
+        // 获取课程信息
+        return baseMapper.selectWebCourseVoById(id);
+    }
 }
+
+
+
+
+
+
+
+
+
+

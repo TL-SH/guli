@@ -27,4 +27,6 @@ public interface ChapterService extends IService<Chapter> {
      * @return
      */
     List<ChapterVo> nestedList(String courseId);
+
+    List<ChapterVo> nestedListForWeb(String courseId);
 }

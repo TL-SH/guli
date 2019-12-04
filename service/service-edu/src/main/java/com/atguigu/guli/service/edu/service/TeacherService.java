@@ -34,4 +34,20 @@ public interface TeacherService extends IService<Teacher> {
     List<Map<String,Object>> selectNameListByKey(String key);
 
 
+    /**
+     * 前台分页
+     * @param pageParam
+     * @return
+     */
+    Map<String, Object> webSelectPage(Page<Teacher> pageParam);
+
+
+    /**
+     * 根据讲师id获取讲师详情页的信息
+     * @param id
+     * @return
+     */
+    Map<String,Object> selectTeacherInfoById(String id);
+
+
 }

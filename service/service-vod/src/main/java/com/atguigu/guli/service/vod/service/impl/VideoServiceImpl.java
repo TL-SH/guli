@@ -96,5 +96,23 @@ public class VideoServiceImpl implements VideoService {
         return map;
     }
 
+    @Override
+    public String getVideoPlayAuth(String videoSourceId) throws ClientException {
+
+        //初始化client对象
+        DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(
+                vodProperties.getKeyid(),
+                vodProperties.getKeysecret());
+
+        //创建请求对象
+        GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest ();
+        request.setVideoId(videoSourceId);
+
+        //获取响应
+        GetVideoPlayAuthResponse response = client.getAcsResponse(request);
+
+        return response.getPlayAuth();
+    }
+
 
 }

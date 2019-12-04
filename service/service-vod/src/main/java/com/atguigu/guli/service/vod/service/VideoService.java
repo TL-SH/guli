@@ -43,4 +43,13 @@ public interface VideoService {
     Map<String,Object> refreshVideoUploadAuth(String videoId) throws ClientException;
 
 
+    /**
+     * 获取后端凭证播放
+     * @param videoSourceId
+     * @return
+     * @throws ClientException
+     */
+    String getVideoPlayAuth(String videoSourceId) throws ClientException;
+
+
 }
