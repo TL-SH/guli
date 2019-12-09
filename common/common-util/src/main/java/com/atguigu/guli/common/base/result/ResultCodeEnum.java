@@ -49,8 +49,8 @@ public enum ResultCodeEnum {
     LOGIN_ACL(false, 28005, "没有权限"),
 
     SMS_SEND_ERROR(false, 28006, "阿里云短信发送失败"),
+    SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL(false,28007,"一分钟只能发送一条短信")
     ;
-
 
 
     private Boolean success;

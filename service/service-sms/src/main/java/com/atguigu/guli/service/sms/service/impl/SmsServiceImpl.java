@@ -57,6 +57,11 @@ public class SmsServiceImpl implements SmsService {
             HashMap<String, String> map = gson.fromJson(data, HashMap.class);
             String code = map.get("Code");
             String message = map.get("Message");
+            if("isv.BUSINESS_LIMIT_CONTROL".equals(code)){
+                log.error("短信发送失败 " + " - code: " + code + ", message: " + message);
+                throw new GuliException(ResultCodeEnum.SMS_SEND_ERROR_BUSINESS_LIMIT_CONTROL);
+            }
+
             if(!"OK".equals(code)){
                 log.error("短信发送失败 " + " - code: " + code + ", message: " + message);
                 throw new GuliException(ResultCodeEnum.SMS_SEND_ERROR);
