@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,6 +95,15 @@ public class VideoController {
             log.error(ExceptionUtils.getMessage(e));
             throw new GuliException(ResultCodeEnum.REFRESH_VIDEO_UPLOADAUTH_ERROR);
         }
+    }
+
+
+    @DeleteMapping("remove")
+    public R removeVideoByIdList(
+            @ApiParam(name = "videoSourceIdList",value = "阿里云视频文件id",required = true)
+            @RequestBody List<String> videoSourceIdList){
+        this.videoService.removeVideoByIdList(videoSourceIdList);
+        return R.ok().message("删除视频文件成功");
     }
 
 }

@@ -32,5 +32,6 @@ public class MemberController {
         return R.ok().data("countRegister", count);
     }
 
+
 }
 

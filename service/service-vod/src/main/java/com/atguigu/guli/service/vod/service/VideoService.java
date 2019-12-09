@@ -3,6 +3,7 @@ package com.atguigu.guli.service.vod.service;
 import com.aliyuncs.exceptions.ClientException;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,5 +52,9 @@ public interface VideoService {
      */
     String getVideoPlayAuth(String videoSourceId) throws ClientException;
 
-
+    /**
+     * 批量删除阿里云文件的id
+     * @param videoSourceIdList
+     */
+    void removeVideoByIdList(List<String> videoSourceIdList);
 }

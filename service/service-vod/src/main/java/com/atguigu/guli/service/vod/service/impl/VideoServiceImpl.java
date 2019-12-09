@@ -7,6 +7,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.vod.model.v20170321.*;
 import com.atguigu.guli.common.base.result.ResultCodeEnum;
+import com.atguigu.guli.common.base.util.ExceptionUtils;
 import com.atguigu.guli.service.base.exception.GuliException;
 import com.atguigu.guli.service.vod.service.VideoService;
 import com.atguigu.guli.service.vod.util.AliyunVodSDKUtils;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -112,6 +114,41 @@ public class VideoServiceImpl implements VideoService {
         GetVideoPlayAuthResponse response = client.getAcsResponse(request);
 
         return response.getPlayAuth();
+    }
+
+    @Override
+    public void removeVideoByIdList(List<String> videoSourceIdList) {
+
+        try {
+            DefaultAcsClient client = AliyunVodSDKUtils.initVodClient(
+                    vodProperties.getKeyid(),
+                    vodProperties.getKeysecret());
+
+            DeleteVideoRequest request = new DeleteVideoRequest();
+
+            int size = videoSourceIdList.size();
+            StringBuffer idListStr = new StringBuffer();
+            for (int i = 0; i < size; i++) {
+
+                idListStr.append(videoSourceIdList.get(i));
+                if(i == size -1 || i % 20 == 19){
+                    System.out.println("idListStr = " + idListStr.toString());
+                    //支持传入多个视频ID，多个用逗号分隔，最多20个
+                    request.setVideoIds(idListStr.toString());
+                    DeleteVideoResponse acsResponse = client.getAcsResponse(request);
+                    System.out.println("requestId = " + acsResponse.getRequestId());
+                    idListStr = new StringBuffer();
+                    System.out.println("idListStr empty = " + idListStr);
+                }else if(i % 20 < 19){
+                    idListStr.append(",");
+                }
+            }
+
+        } catch (ClientException e) {
+            log.error(ExceptionUtils.getMessage(e));
+            throw new GuliException(ResultCodeEnum.VIDEO_DELETE_ALIYUN_ERROR);
+        }
+
     }
 
 

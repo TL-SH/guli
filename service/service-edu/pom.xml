@@ -11,7 +11,21 @@
     <!-- 打包方式 -->
     <packaging>jar</packaging>
     <artifactId>service-edu</artifactId>
-    
+    <dependencies>
+        <!--服务调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <finalName>service-edu</finalName>

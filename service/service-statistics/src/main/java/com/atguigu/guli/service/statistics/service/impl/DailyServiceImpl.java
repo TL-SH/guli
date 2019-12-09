@@ -7,7 +7,6 @@ import com.atguigu.guli.service.statistics.mapper.DailyMapper;
 import com.atguigu.guli.service.statistics.service.DailyService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

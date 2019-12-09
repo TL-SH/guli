@@ -1,22 +1,19 @@
 package com.atguigu.guli.service.edu.service.impl;
 
-import com.atguigu.guli.service.edu.entity.Chapter;
-import com.atguigu.guli.service.edu.entity.Course;
-import com.atguigu.guli.service.edu.entity.CourseDescription;
-import com.atguigu.guli.service.edu.entity.Teacher;
+import com.atguigu.guli.service.edu.client.OssClient;
+import com.atguigu.guli.service.edu.client.VodClient;
+import com.atguigu.guli.service.edu.entity.*;
 import com.atguigu.guli.service.edu.entity.form.CourseInfoForm;
 import com.atguigu.guli.service.edu.entity.vo.CoursePublishVo;
 import com.atguigu.guli.service.edu.entity.vo.CourseQueryVo;
 import com.atguigu.guli.service.edu.entity.vo.WebCourseQueryVo;
 import com.atguigu.guli.service.edu.entity.vo.WebCourseVo;
-import com.atguigu.guli.service.edu.mapper.ChapterMapper;
-import com.atguigu.guli.service.edu.mapper.CommentMapper;
-import com.atguigu.guli.service.edu.mapper.CourseDescriptionMapper;
-import com.atguigu.guli.service.edu.mapper.CourseMapper;
+import com.atguigu.guli.service.edu.mapper.*;
 import com.atguigu.guli.service.edu.service.CourseService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -46,6 +45,16 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private OssClient ossClient;
+
+    @Autowired
+    private VideoMapper videoMapper;
+
+
+    @Autowired
+    private VodClient vodClient;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -130,27 +139,40 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
         //删除关联数据
 
-        //封面：OSS
-        //远程调用
+        //删除oss中的图片文件
+        //在此处调用oss中的删除图片文件的接口
+        Course course = baseMapper.selectById(id);
+        String cover = course.getCover();
+        ossClient.removeFile(cover);
 
-        //视频：vod
-        //远程调用
+        // 删除阿里云视频id
+        QueryWrapper<Video> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("video_source_id");
+        queryWrapper.eq("course_id",id);
+        List<Map<String, Object>> maps = videoMapper.selectMaps(queryWrapper);
 
-        //收藏信息：course_collect
+        List<String> videoSourceIdList = maps.stream().map(map -> {
+            String videoSourceId = (String) map.get("video_source_id");
+            return videoSourceId;
+        }).collect(Collectors.toList());
 
-        //评论信息：comment
+        vodClient.removeVideoByIdList(videoSourceIdList);
 
-        //删除课时信息：video
 
-        // 根据id删除所有的章节 chapter
-        QueryWrapper<Chapter> chapterQueryWrapper = new QueryWrapper<>();
-        chapterQueryWrapper.eq("course_id",id);
-        chapterMapper.delete(chapterQueryWrapper);
+        //根据id删除所有视频
+        QueryWrapper<Video> queryWrapperVideo = new QueryWrapper<>();
+        queryWrapperVideo.eq("course_id", id);
+        videoMapper.delete(queryWrapperVideo);
 
-        // 根据id删除课程详情 course_description
+        //根据id删除所有章节
+        QueryWrapper<Chapter> queryWrapperChapter = new QueryWrapper<>();
+        queryWrapperChapter.eq("course_id", id);
+        chapterMapper.delete(queryWrapperChapter);
+
+        //删除课程详情
         courseDescriptionMapper.deleteById(id);
 
-        // 根据id删除课程 course
+        //根据id删除课程
         baseMapper.deleteById(id);
 
     }

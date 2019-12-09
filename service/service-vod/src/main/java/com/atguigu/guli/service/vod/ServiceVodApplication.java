@@ -8,10 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author tanglei
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)//取消数据源自动配置
+@SpringBootApplication
 @ComponentScan({"com.atguigu.guli"})
-public class ServiceVodApplication {
+public class ServiceVodApplication{
     public static void main(String[] args) {
-        SpringApplication.run(ServiceVodApplication.class, args);
+        SpringApplication.run(ServiceVodApplication.class,args);
     }
 }
