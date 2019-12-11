@@ -4,6 +4,7 @@ import com.atguigu.guli.common.base.result.ResultCodeEnum;
 import com.atguigu.guli.common.base.util.FormUtils;
 import com.atguigu.guli.common.base.util.JwtUtils;
 import com.atguigu.guli.common.base.util.MD5;
+import com.atguigu.guli.service.base.dto.MemberDto;
 import com.atguigu.guli.service.base.exception.GuliException;
 import com.atguigu.guli.service.ucenter.entity.Member;
 import com.atguigu.guli.service.ucenter.entity.vo.LoginInfoVo;
@@ -119,5 +120,13 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("openid",openid);
         return baseMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public MemberDto getMemberDtoByMemberId(String memberId) {
+        Member member = baseMapper.selectById(memberId);
+        MemberDto memberDto = new MemberDto();
+        BeanUtils.copyProperties(member, memberDto);
+        return memberDto;
     }
 }

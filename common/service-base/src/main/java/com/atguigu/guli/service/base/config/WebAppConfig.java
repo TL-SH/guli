@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author tanglei
  */
-@Configuration
+//@Configuration
 public class WebAppConfig implements WebMvcConfigurer {
 
     @Override

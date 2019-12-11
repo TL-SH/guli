@@ -5,4 +5,7 @@
     <select id="selectRegisterCount" resultType="com.atguigu.guli.service.ucenter.entity.Member">
           select count(1) from ucenter_member where date(gmt_create) = #{value}
     </select>
+
+
+
 </mapper>

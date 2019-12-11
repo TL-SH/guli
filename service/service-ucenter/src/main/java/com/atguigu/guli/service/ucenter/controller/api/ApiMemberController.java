@@ -3,6 +3,7 @@ package com.atguigu.guli.service.ucenter.controller.api;
 import com.atguigu.guli.common.base.result.R;
 import com.atguigu.guli.common.base.result.ResultCodeEnum;
 import com.atguigu.guli.common.base.util.JwtUtils;
+import com.atguigu.guli.service.base.dto.MemberDto;
 import com.atguigu.guli.service.base.exception.GuliException;
 import com.atguigu.guli.service.ucenter.entity.vo.LoginInfoVo;
 import com.atguigu.guli.service.ucenter.entity.vo.LoginVo;
@@ -54,6 +55,14 @@ public class ApiMemberController {
             log.error("Jwt Signature解析失败：" + e.getMessage());
             throw new GuliException(ResultCodeEnum.FETCH_USERINFO_ERROR);
         }
+    }
+
+
+    @ApiOperation(value = "根据会员id查询会员信息")
+    @GetMapping(value = "inner/get-member-dto/{memberId}")
+    public MemberDto getMemberDtoByMemberId(@PathVariable("memberId") String memberId){
+        MemberDto memberDto = memberService.getMemberDtoByMemberId(memberId);
+        return memberDto;
     }
 
 }

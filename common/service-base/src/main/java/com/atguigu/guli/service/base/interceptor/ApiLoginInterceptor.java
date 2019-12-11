@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author tanglei
  * 网站接口api拦截器
  */
-@Component
+//@Component
 public class ApiLoginInterceptor implements HandlerInterceptor {
 
     @Override
