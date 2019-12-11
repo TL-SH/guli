@@ -38,6 +38,9 @@ public enum ResultCodeEnum {
     COMMENT_EMPTY(false, 24006, "评论内容必须填写"),
 
     PAY_RUN(false, 25000, "支付中"),
+    PAY_UNIFIEDORDER_ERROR(false, 25001, "获取支付二维码失败"),
+
+    PAY_ORDERQUERY_ERROR(false, 25002, "查询订单状态失败"),
 
     GATEWAY_ERROR(false, 26000, "服务不能访问"),
 

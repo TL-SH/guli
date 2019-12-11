@@ -6,6 +6,18 @@ spring:
     active: dev # 环境设置
   application:
     name: guli-order # 服务名
+  redis:
+    host: 121.199.40.167
+    port: 6379
+    database: 0
+    timeout: 1800000
+    password: 871190
+    jedis:
+      pool:
+        max-active: 20 #最大连接数
+        max-wait: -1    #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5    #最大空闲
+        min-idle: 0     #最小空闲
   datasource: # mysql数据库连接
     driver-class-name: com.mysql.jdbc.Driver
     password: 871190
@@ -47,10 +59,14 @@ eureka:
 
 weixin:
   pay:
-    appid: wx8397f8696b538317
-    partner: 1558950191 #商户号
-    partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb #商户key
-    notifyurl: http://a31ef7db.ngrok.io/WeChatPay/WeChatPayNotify
+    #关联的公众号appid
+    appid: wx74862e0dfcf69954
+    #商户号
+    partner: 1558950191
+    #商户key
+    partnerkey: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+    #回调地址
+    notifyurl: http://guli.shop/api/order/weixinPay/weixinNotify
 
 #hystrix的超时时间
 hystrix:

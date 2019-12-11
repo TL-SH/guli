@@ -2,6 +2,7 @@ package com.atguigu.guli.service.order.mapper;
 
 import com.atguigu.guli.service.order.entity.PayLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author leishuai
  * @since 2019-12-10
  */
+@Repository
 public interface PayLogMapper extends BaseMapper<PayLog> {
 
 }

@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.crypto.engines.NaccacheSternEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -119,5 +120,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public Boolean isBuyByCourseId(String memberId, String courseId) {
         Integer count = this.baseMapper.isBuyByCourseId(memberId,courseId);
         return count>0;
+    }
+
+    @Override
+    public Order getOrderByOrderNo(String orderNo) {
+        QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_no",orderNo);
+        return baseMapper.selectOne(queryWrapper);
     }
 }
