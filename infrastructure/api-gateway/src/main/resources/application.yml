@@ -12,34 +12,34 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: GULI-EDU
-          uri: lb://GULI-EDU
-          predicates:
-            - Path=/*/edu/** # 路径匹配
-        - id: GULI-MSM
-          uri: lb://GULI-MSM
-          predicates:
-            - Path=/*/msm/** # 路径匹配
-        - id: GULI-ORDER
-          uri: lb://GULI-ORDER
-          predicates:
-            - Path=/*/order/** # 路径匹配
-        - id: GULI-OSS
-          uri: lb://GULI-OSS
-          predicates:
-            - Path=/*/oss/** # 路径匹配
-        - id: GULI-STATISTICS
-          uri: lb://GULI-STATISTICS
-          predicates:
-            - Path=/*/statistics/** # 路径匹配
-        - id: GULI-UCENTER
-          uri: lb://GULI-UCENTER
-          predicates:
-            - Path=/*/ucenter/** # 路径匹配
-        - id: GULI-VOD
-          uri: lb://GULI-VOD
-          predicates:
-            - Path=/*/vod/** # 路径匹配
+      - id: GULI-EDU
+        uri: lb://GULI-EDU
+        predicates:
+        - Path=/*/edu/** # 路径匹配
+      - id: GULI-MSM
+        uri: lb://GULI-SMS
+        predicates:
+        - Path=/*/sms/** # 路径匹配
+      - id: GULI-ORDER
+        uri: lb://GULI-ORDER
+        predicates:
+        - Path=/*/order/** # 路径匹配
+      - id: GULI-OSS
+        uri: lb://GULI-OSS
+        predicates:
+        - Path=/*/oss/** # 路径匹配
+      - id: GULI-STATISTICS
+        uri: lb://GULI-STATISTICS
+        predicates:
+        - Path=/*/statistics/** # 路径匹配
+      - id: GULI-UCENTER
+        uri: lb://GULI-UCENTER
+        predicates:
+        - Path=/*/ucenter/** # 路径匹配
+      - id: GULI-VOD
+        uri: lb://GULI-VOD
+        predicates:
+        - Path=/*/vod/** # 路径匹配
 
 eureka:
   client:

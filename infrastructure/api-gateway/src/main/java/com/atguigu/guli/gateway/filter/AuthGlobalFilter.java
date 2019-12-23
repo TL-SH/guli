@@ -12,12 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * @author helen
  * @since 2019/12/11
  */
 @Component
@@ -29,7 +27,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
-        //api接口，校验用户必须登录
+        //谷粒学院api接口，校验用户必须登录
         if(antPathMatcher.match("/api/**/auth/**", path)) {
             List<String> tokenList = request.getHeaders().get("token");
             if(null == tokenList) {
